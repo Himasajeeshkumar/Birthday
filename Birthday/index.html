@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Happy Birthday Mom!</title>
+  <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body { height: 100%; font-family: 'Poppins', sans-serif; }
+    body { overflow: hidden; }
+
+    .scene {
+      position: absolute; width: 100%; height: 100%;
+      display: flex; align-items: center; justify-content: center;
+      flex-direction: column; text-align: center;
+      padding: 20px; background-size: cover; background-position: center;
+      color: white; transition: opacity 1s ease;
+      opacity: 0; pointer-events: none;
+    }
+    .scene.visible { opacity: 1; pointer-events: all; }
+
+    button {
+      margin-top: 20px; padding: 12px 24px; font-size: 1rem;
+      border: none; border-radius: 12px; background-color: white; color: #ff4081;
+      font-weight: bold; cursor: pointer; transition: 0.3s;
+    }
+    button:hover { background-color: #ff4081; color: white; }
+
+    h1 { font-family: 'Pacifico', cursive; font-size: 3rem; }
+    p { font-size: 1.2rem; margin-top: 10px; }
+    img { max-width: 80%; border-radius: 20px; box-shadow: 0 0 20px rgba(0,0,0,0.3); margin-top: 20px; }
+
+    audio { display: none; }
+
+    .letter-box {
+      margin-top: 20px;
+      background: white;
+      color: #333;
+      padding: 20px;
+      border-radius: 12px;
+      max-width: 500px;
+      text-align: center;
+      font-size: 1.3rem;
+      font-weight: bold;
+      box-shadow: 0 0 12px rgba(0,0,0,0.25);
+    }
+
+    /* 🎈 Balloons */
+    .balloon {
+      position: absolute;
+      bottom: -150px;
+      width: 60px;
+      height: 80px;
+      border-radius: 50%;
+      background: red;
+      animation: floatUp 8s linear infinite;
+    }
+    .balloon::after {
+      content: '';
+      position: absolute;
+      bottom: -20px;
+      left: 50%;
+      width: 2px;
+      height: 20px;
+      background: #555;
+      transform: translateX(-50%);
+    }
+    @keyframes floatUp {
+      0% { transform: translateY(0) scale(1); opacity: 1; }
+      100% { transform: translateY(-120vh) scale(1.1); opacity: 0.8; }
+    }
+
+    /* 🎊 Confetti */
+    .confetti {
+      position: absolute;
+      top: -10px;
+      width: 10px;
+      height: 14px;
+      opacity: 0.8;
+      animation: fall 5s linear infinite;
+    }
+    @keyframes fall {
+      0% { transform: translateY(0) rotate(0deg); }
+      100% { transform: translateY(110vh) rotate(360deg); }
+    }
+  </style>
+</head>
+<body>
+  <!-- Scene 0: Welcome with Balloons + Confetti -->
+  <div id="scene0" class="scene visible" style="background: linear-gradient(#ff9a9e, #fad0c4);">
+    <h1>🎉 Happy Birthday Amma! 🎉</h1>
+    <p>Click to begin your birthday surprise journey!</p>
+    <button onclick="nextScene()">Let's Go</button>
+
+    <!-- 🎈 Balloons -->
+    <div class="balloon" style="left: 10%; background: #ff4c4c; animation-delay: 0s;"></div>
+    <div class="balloon" style="left: 30%; background: #4caf50; animation-delay: 2s;"></div>
+    <div class="balloon" style="left: 50%; background: #2196f3; animation-delay: 4s;"></div>
+    <div class="balloon" style="left: 70%; background: #ff9800; animation-delay: 6s;"></div>
+    <div class="balloon" style="left: 85%; background: #9c27b0; animation-delay: 3s;"></div>
+  </div>
+
+  <!-- Scene 1: Cake + Confetti -->
+  <div id="scene1" class="scene" style="background: linear-gradient(to top right, #ff9a9e, #fecfef);">
+    <h1>🎂 Here’s Your Cake!</h1>
+    <p>Make a wish and smile big!</p>
+    <img src="https://media4.giphy.com/media/ySmLyvQJ8cogW6CadR/giphy.gif" alt="Birthday Cake">
+    <button onclick="nextScene()">Next</button>
+  </div>
+
+  <!-- Scene 2: Special Message + Confetti -->
+  <div id="scene2" class="scene" style="background: linear-gradient(to bottom right, #a18cd1, #fbc2eb);">
+    <img src="https://media1.giphy.com/media/l3vRebb6HyeIgvmQ8/giphy.gif" alt="Love">
+    <button onclick="nextScene()">Next</button>
+  </div>
+
+  <!-- Scene 3: Short Letter -->
+  <div id="scene3" class="scene" style="background: linear-gradient(#d299c2, #fef9d7); color: #333;">
+    <h1>💌 A Little Note</h1>
+    <img src="Amma.jpg" alt="Mom's Photo" width="200px">
+    <div class="letter-box">
+      <p>“Happy Birthday Amma 💖 May your day be filled with laughter, warmth, and all the little things that make you smile. Thank you for everything —”</p>
+    </div>
+    <button onclick="restart()">Replay</button>
+    <div class="balloon" style="left: 10%; background: #ff4c4c; animation-delay: 0s;"></div>
+    <div class="balloon" style="left: 30%; background: #4caf50; animation-delay: 2s;"></div>
+    <div class="balloon" style="left: 50%; background: #2196f3; animation-delay: 4s;"></div>
+    <div class="balloon" style="left: 70%; background: #ff9800; animation-delay: 6s;"></div>
+    <div class="balloon" style="left: 85%; background: #9c27b0; animation-delay: 3s;"></div>
+  </div>
+
+  <!-- Background Music -->
+  <audio id="bgMusic" autoplay loop>
+    <source src="birthday.mp3" type="audio/mpeg">
+  </audio>
+
+  <script>
+    let current = 0;
+    const scenes = document.querySelectorAll('.scene');
+    const music = document.getElementById("bgMusic");
+
+    function nextScene() {
+      if (current < scenes.length - 1) {
+        scenes[current].classList.remove('visible');
+        current++;
+        scenes[current].classList.add('visible');
+      }
+    }
+
+    function restart() {
+      scenes[current].classList.remove('visible');
+      current = 0;
+      scenes[current].classList.add('visible');
+    }
+
+    // 🎊 Generate Confetti for first 3 scenes
+    function createConfetti(scene) {
+      for (let i = 0; i < 25; i++) {
+        const confetti = document.createElement("div");
+        confetti.classList.add("confetti");
+        confetti.style.left = Math.random() * 100 + "vw";
+        confetti.style.background = `hsl(${Math.random() * 360}, 80%, 60%)`;
+        confetti.style.animationDuration = (3 + Math.random() * 3) + "s";
+        confetti.style.animationDelay = Math.random() * 5 + "s";
+        scene.appendChild(confetti);
+      }
+    }
+
+    createConfetti(document.getElementById("scene0"));
+    createConfetti(document.getElementById("scene1"));
+    createConfetti(document.getElementById("scene2"));
+
+    // Ensure music plays on first click
+    document.body.addEventListener("click", () => {
+      if (music.paused) music.play();
+    });
+  </script>
+</body>
+</html>
